@@ -1,7 +1,7 @@
 - installer nodejs 20
 - démarrer docker
 - créer le fichier .env.local à la racine du projet
-- démarrer le conteneur pour la bdd : "docker compose up --env-file .env.local" à la racine du projet
+- démarrer le conteneur pour la bdd : "docker compose --env-file .env.local up" à la racine du projet
 - installer les dépendances : "npm install" à la racine du projet
 - démarrer le serveur : "npm run dev" à la racine du projet
 - installer Postman et tester l'url localhost:3000/api/health pour vérifier que l'API fonctionne
