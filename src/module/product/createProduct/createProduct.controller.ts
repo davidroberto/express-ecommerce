@@ -1,5 +1,4 @@
 import {CreateProductUsecase} from "./createProduct.usecase";
-
 const express = require("express");
 const router = express.Router();
 
@@ -15,7 +14,7 @@ router.post('/product', async (req: Request, res: Response) => {
 
     const createProductUseCase = new CreateProductUsecase();
 
-    return createProductUseCase.execute({title, description, price, res});
+    return createProductUseCase.execute({title, description, price}, res);
 
 });
 

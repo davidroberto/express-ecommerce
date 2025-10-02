@@ -1,9 +1,16 @@
 import AppDataSource from "../../../config/db.config";
 import {Product} from "../Product";
+import {Response} from "express";
+
+type CreateProductDTO = {
+    price: number;
+    title: string;
+    description: string;
+}
 
 export class CreateProductUsecase {
 
-     async execute ({price, title, description}) {
+     async execute ({price, title, description}: CreateProductDTO, res: Response) {
 
         if (price <= 0) {
             return res.status(400).json({message: "Price must be greater than zero"});

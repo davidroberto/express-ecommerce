@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn} from "typeorm"
+import {Entity, Column, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity()
 export class Product {
@@ -7,7 +7,7 @@ export class Product {
     public id: number;
 
     @Column({nullable: true, type: "float"})
-    public price: float;
+    public price: number;
 
     @Column()
     public title: string;
