@@ -14,7 +14,11 @@ router.post('/product', async (req: Request, res: Response) => {
 
     const createProductUseCase = new CreateProductUsecase();
 
-    return createProductUseCase.execute({title, description, price}, res);
+    try {
+        createProductUseCase.execute({title, description, price});
+    } catch (error: any) {
+        return res.status(400).json({message: error.message});
+    }
 
 });
 
