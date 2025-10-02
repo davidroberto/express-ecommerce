@@ -1,6 +1,6 @@
 - installer nodejs 20
 - démarrer docker
-- créer le fichier .env.local à la racine du projet
+- créer le fichier .env.local à la racine du projet (copie du .env) et remplir les variables d'environnement (avec les valeurs que vous voulez)
 - démarrer le conteneur pour la bdd : "docker compose --env-file .env.local up" à la racine du projet
 - installer les dépendances : "npm install" à la racine du projet
 - démarrer le serveur : "npm run dev" à la racine du projet
