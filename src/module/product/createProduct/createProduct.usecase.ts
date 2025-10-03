@@ -18,21 +18,11 @@ export class CreateProductUsecase {
 
      async execute ({price, title, description}: CreateProductDTO) {
 
-        if (price <= 0) {
-            throw new Error("price must be greater than 0");
-        }
-
-        if (price > 10000) {
-            throw new Error("price must be less than 10000");
-        }
-
-        if (title.length <= 2) {
-            throw new Error("titre trop court");
-        }
+        const product = new Product(title, description, price);
 
         try {
             // j'utilise le repository pour sauvegarder le produit
-            await this.productRepository.save({title, description, price});
+            await this.productRepository.save(product);
         } catch (error) {
             throw new Error('Error saving product');
         }

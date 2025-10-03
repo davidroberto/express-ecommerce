@@ -21,15 +21,15 @@ Règles métier :
         - Quand je créé un produit avec en titre «sw»
         - Alors une erreur doit être envoyée "titre trop court»
 
-    - Exemple 3/ Scénario 3 :
+    - Exemple 3/ Scénario 3 : création échouée, prix négatif
         - Étant donné qu'il n'y a pas de produit enregistré
         - Quand je créé un produit avec en prix -10
-        - Alors une erreur doit être envoyée « le prix doit être supérieur à 0 »
+        - Alors une erreur doit être envoyée «le prix doit être supérieur à 0»
 
-    - Exemple 4/ Scénario 4 :
+    - Exemple 4/ Scénario 4 : création échouée, prix supérieur à 10000 
         - Étant donné qu'il n'y a pas de produit enregistré
         - Quand je créé un produit avec en prix 11000
-        - Alors une erreur doit être envoyée « le prix doit être inférieur à 11000 »
+        - Alors une erreur doit être envoyée «le prix doit être inférieur à 11000»
 
 
 ### US-2: Modifier un produit

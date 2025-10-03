@@ -43,6 +43,32 @@ describe("US-1 : Créer un produit",  () => {
 
     });
 
+    test("Scénario 3 : création échouée, prix négatif", async () => {
+        //Étant donné qu'il n'y a pas de produit enregistré
+        const dummyProductRepository = new DummyProductRepository();
+
+        const createProductUseCase = new CreateProductUsecase(dummyProductRepository);
+        // Quand je créé un produit avec en prix -10
+        await expect(
+            createProductUseCase.execute({title: "switch", description: "nouvelle console", price: -10})
+        // Alors une erreur doit être envoyée «le prix doit être supérieur à 0»
+        ).rejects.toThrow("le prix doit être supérieur à 0");
+
+    })
 
 
+
+    test("Scénario 4: création échouée, prix supérieur à 10000", async () => {
+
+        //Étant donné qu'il n'y a pas de produit enregistré
+        const dummyProductRepository = new DummyProductRepository();
+
+        const createProductUseCase = new CreateProductUsecase(dummyProductRepository);
+        await expect(
+            // Quand je créé un produit avec en prix 11000
+            createProductUseCase.execute({title: "switch", description: "nouvelle console", price: 11000})
+        // Alors une erreur doit être envoyée «le prix doit être inférieur à 11000»
+        ).rejects.toThrow("le prix doit être inférieur à 10000");
+
+    });
 });
