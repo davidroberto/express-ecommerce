@@ -1,5 +1,6 @@
 import AppDataSource from "../../../config/db.config";
 import {Product} from "../Product";
+import {ProductRepository} from "../productRepository.interface";
 
 type CreateProductDTO = {
     price: number;
@@ -8,6 +9,15 @@ type CreateProductDTO = {
 }
 
 export class CreateProductUsecase {
+
+    private readonly productRepository: ProductRepository;
+
+    // je reçois en paramètre une implémentation de ProductRepository (type orm ou pas)
+    // et je l'affecte à une propriété de la classe
+    // c'est l'inversion de dépendance (le use case ne choisit pas le repository utilisé
+    constructor( productRepository: ProductRepository) {
+        this.productRepository = productRepository;
+    }
 
      async execute ({price, title, description}: CreateProductDTO) {
 
@@ -23,10 +33,9 @@ export class CreateProductUsecase {
             throw new Error("title must be at least 2 characters");
         }
 
-        const productRepositoryTypeOrm = AppDataSource.getRepository<Product>(Product);
-
         try {
-            await productRepositoryTypeOrm.save({title, description, price});
+            // j'utilise le repository pour sauvegarder le produit
+            await this.productRepository.save({title, description, price});
         } catch (error) {
             throw new Error('Error saving product');
         }

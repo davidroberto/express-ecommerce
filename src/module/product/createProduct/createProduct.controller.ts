@@ -3,6 +3,8 @@ const express = require("express");
 const router = express.Router();
 
 import {Request, Response} from "express";
+import AppDataSource from "../../../config/db.config";
+import {Product} from "../Product";
 
 router.post('/product', async (req: Request, res: Response) => {
 
@@ -12,7 +14,11 @@ router.post('/product', async (req: Request, res: Response) => {
         return res.status(400).json({message: "Missing required fields"});
     }
 
-    const createProductUseCase = new CreateProductUsecase();
+    // je récupère le repository TypeORM
+    const productRepository = AppDataSource.getRepository<Product>(Product);
+    // j'instancie le use case
+    // et je lui injecte le repository type orm
+    const createProductUseCase = new CreateProductUsecase(productRepository);
 
     try {
         await createProductUseCase.execute({title, description, price});

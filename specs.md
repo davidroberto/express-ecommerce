@@ -11,9 +11,9 @@ Règles métier :
 - Prix > 0
 - Prix < 10 000
 
-    - Exemple 1/ Scénario 1 :
+    - Exemple 1/ Scénario 1 : création réussie
         - Étant donné je suis identifié en tant qu’admin
-        - Quand je créé un produit avec en titre « switch 2 », description « nouvelle console » et un prix à 500
+        - Quand je créé un produit avec en titre «switch 2», description «nouvelle console» et un prix à 500
         - Alors le produit doit être créé
 
     - Exemple 2/ Scénario 2 :
