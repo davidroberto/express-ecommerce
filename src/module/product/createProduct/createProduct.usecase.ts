@@ -26,8 +26,8 @@ export class CreateProductUsecase {
             throw new Error("price must be less than 10000");
         }
 
-        if (title.length < 2) {
-            throw new Error("title must be at least 2 characters");
+        if (title.length <= 2) {
+            throw new Error("titre trop court");
         }
 
         try {

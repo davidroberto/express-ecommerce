@@ -12,22 +12,22 @@ Règles métier :
 - Prix < 10 000
 
     - Exemple 1/ Scénario 1 : création réussie
-        - Étant donné je suis identifié en tant qu’admin
+        - Étant donné qu'il n'y a pas de produit enregistré
         - Quand je créé un produit avec en titre «switch 2», description «nouvelle console» et un prix à 500
         - Alors le produit doit être créé
 
-    - Exemple 2/ Scénario 2 :
-        - Étant donné je suis identifié en tant qu’admin
-        - Quand je créé un produit avec en titre « sw »
-        - Alors une erreur doit être envoyée « titre trop court »
+    - Exemple 2/ Scénario 2 : création échouée, titre trop court
+        - Étant donné qu'il n'y a pas de produit enregistré
+        - Quand je créé un produit avec en titre «sw»
+        - Alors une erreur doit être envoyée "titre trop court»
 
     - Exemple 3/ Scénario 3 :
-        - Étant donné je suis identifié en tant qu’admin
+        - Étant donné qu'il n'y a pas de produit enregistré
         - Quand je créé un produit avec en prix -10
         - Alors une erreur doit être envoyée « le prix doit être supérieur à 0 »
 
     - Exemple 4/ Scénario 4 :
-        - Étant donné je suis identifié en tant qu’admin
+        - Étant donné qu'il n'y a pas de produit enregistré
         - Quand je créé un produit avec en prix 11000
         - Alors une erreur doit être envoyée « le prix doit être inférieur à 11000 »
 

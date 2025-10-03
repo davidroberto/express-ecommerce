@@ -16,7 +16,7 @@ describe("US-1 : Créer un produit",  () => {
 
     test("Scénario 1: création réussie", async () => {
 
-        // Étant donné je suis identifié en tant qu’admin et qu'il n'y a pas de produit enregistré
+        // Étant qu'il n'y a pas de produit enregistré
         const dummyProductRepository = new DummyProductRepository();
         const createProductUseCase = new CreateProductUsecase(dummyProductRepository);
 
@@ -26,8 +26,22 @@ describe("US-1 : Créer un produit",  () => {
         // Alors le produit doit être créé
         ).resolves.not.toThrow();
 
+    });
 
-    })
+    test("Scénario 2: création échouée - titre trop court", async () => {
+        // Étant donné qu'il n'y a pas de produit enregistré
+        const dummyProductRepository = new DummyProductRepository();
+
+        const createProductUseCase = new CreateProductUsecase(dummyProductRepository);
+
+        await expect(
+        // Quand je créé un produit avec en titre «sw»
+            createProductUseCase.execute({title: "sw", description: "nouvelle console", price: 500})
+        // Alors une erreur doit être envoyée "titre trop court»
+        ).rejects.toThrow("titre trop court");
+
+
+    });
 
 
 
