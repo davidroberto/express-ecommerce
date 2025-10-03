@@ -14,10 +14,7 @@ router.post('/product', async (req: Request, res: Response) => {
         return res.status(400).json({message: "Missing required fields"});
     }
 
-    // je récupère le repository TypeORM
     const productRepository = AppDataSource.getRepository<Product>(Product);
-    // j'instancie le use case
-    // et je lui injecte le repository type orm
     const createProductUseCase = new CreateProductUsecase(productRepository);
 
     try {

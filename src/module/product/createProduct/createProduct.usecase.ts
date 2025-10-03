@@ -12,9 +12,6 @@ export class CreateProductUsecase {
 
     private readonly productRepository: ProductRepository;
 
-    // je reçois en paramètre une implémentation de ProductRepository (type orm ou pas)
-    // et je l'affecte à une propriété de la classe
-    // c'est l'inversion de dépendance (le use case ne choisit pas le repository utilisé
     constructor( productRepository: ProductRepository) {
         this.productRepository = productRepository;
     }
