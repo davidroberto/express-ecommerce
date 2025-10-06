@@ -1,50 +1,132 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+SYNC IMPACT REPORT
+Version: 0.0.0 → 1.0.0
+Changes:
+- Initial constitution creation
+- Added 7 core principles based on src/module/product conventions
+- Added Development Workflow and Quality Gates sections
+- Added Governance section
+Templates requiring updates:
+✅ plan-template.md - Constitution Check section references this document
+✅ spec-template.md - Requirements align with TDD and domain-driven principles
+✅ tasks-template.md - Task ordering reflects TDD workflow
+Follow-up TODOs: None
+-->
+
+# Express E-Commerce Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Domain-Driven Design (NON-NEGOTIABLE)
+Business logic MUST reside in domain entities, not in use cases or controllers. Entities are responsible for validating their own state and enforcing business rules. Use cases orchestrate operations but delegate domain logic to entities.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+**Rationale**: Ensures business rules are centralized, testable in isolation, and not scattered across the application. Prevents anemic domain models and maintains clear separation of concerns.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### II. Dependency Inversion
+High-level modules (use cases) MUST NOT depend on low-level modules (repositories). Both must depend on abstractions (interfaces). Repository interfaces are defined in the domain layer, implementations in infrastructure.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+**Rationale**: Enables testability through dependency injection, allows switching implementations (e.g., different databases), and maintains architectural boundaries.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### III. Test-Driven Development (NON-NEGOTIABLE)
+Tests MUST be written before implementation. Follow the Red-Green-Refactor cycle strictly:
+1. Write test that fails
+2. Implement minimal code to pass test
+3. Refactor while keeping tests green
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+**Rationale**: Ensures all code is testable and tested, drives better design, provides living documentation, and prevents regressions.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### IV. Module Organization by Feature
+Code MUST be organized by feature modules (e.g., `src/module/product`, `src/module/order`), not by technical layers. Each module contains its entities, use cases, controllers, and interfaces.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+**Rationale**: Improves cohesion, makes features easier to locate and modify, supports future microservice extraction, and reduces cross-cutting changes.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### V. Use Case Pattern
+Each business operation MUST be implemented as a separate use case class with a single `execute()` method. Use cases accept DTOs (Data Transfer Objects) and coordinate domain operations.
+
+**Rationale**: Provides clear entry points for business operations, simplifies testing, enables transaction boundaries, and documents application capabilities.
+
+### VI. Type Safety and Validation
+TypeScript strict mode MUST be enabled. Domain entities MUST validate all inputs in constructors and throw descriptive errors for invalid states. Controllers MUST validate request completeness before invoking use cases.
+
+**Rationale**: Catches errors at compile time and runtime boundaries, provides better IDE support, documents data structures, and prevents invalid state propagation.
+
+### VII. Test Isolation
+Unit tests MUST use test doubles (dummies, mocks, stubs) to isolate the system under test. Repository tests use in-memory implementations. Integration tests use test containers for real database interactions.
+
+**Rationale**: Keeps tests fast and reliable, eliminates external dependencies in unit tests, enables parallel test execution, and provides clear failure diagnostics.
+
+## Development Workflow
+
+### File Naming Conventions
+- Entities: PascalCase (e.g., `Product.ts`)
+- Use cases: camelCase with `.usecase.ts` suffix (e.g., `createProduct.usecase.ts`)
+- Controllers: camelCase with `.controller.ts` suffix (e.g., `createProduct.controller.ts`)
+- Interfaces: camelCase with `.interface.ts` suffix (e.g., `productRepository.interface.ts`)
+- Tests: Match implementation file with `.spec.ts` suffix (e.g., `createProduct.useCase.spec.ts`)
+
+### Module Structure
+Each feature module MUST follow this structure:
+```
+src/module/{feature}/
+├── {Feature}.ts                          # Domain entity
+├── {feature}Repository.interface.ts      # Repository interface
+├── {operation}/
+│   ├── {operation}.usecase.ts           # Use case implementation
+│   ├── {operation}.controller.ts        # HTTP controller
+│   └── {operation}.useCase.spec.ts      # Unit tests
+```
+
+### Testing Strategy
+- **Unit tests**: Test domain entities and use cases in isolation using test doubles
+- **Integration tests**: Test database interactions using testcontainers
+- **Contract tests**: Test HTTP endpoints using supertest
+- Tests MUST be written in French to match business domain language (Gherkin-style comments)
+- Test structure: Given-When-Then pattern in comments
+
+## Quality Gates
+
+### Code Review Requirements
+All changes MUST:
+- Have passing tests written before implementation
+- Follow the module organization pattern
+- Include type-safe interfaces
+- Validate inputs at boundaries (entity constructors, controllers)
+- Use dependency injection for repositories
+
+### Testing Requirements
+- Minimum test coverage: Not specified (focus on critical paths)
+- Tests must use descriptive scenario names (e.g., "Scénario 1: création réussie")
+- Entity validation rules MUST be tested for both success and failure cases
+- Error messages MUST be in French to match domain language
+
+### Performance Standards
+- Price validation: Products must have price > 0 and < 10000
+- Title validation: Minimum 3 characters
+- Response time targets: Not yet specified (TODO: Define based on production requirements)
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+### Amendment Process
+1. Constitution changes require documentation of rationale
+2. Version bumping follows semantic versioning:
+   - MAJOR: Removal or incompatible change to core principles
+   - MINOR: Addition of new principles or sections
+   - PATCH: Clarifications, wording improvements, non-semantic changes
+3. All template files must be checked for consistency after amendments
+4. Changes propagate to plan-template.md, spec-template.md, and tasks-template.md
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+### Compliance Review
+- All pull requests MUST verify adherence to principles I-VII
+- Constitution violations require explicit justification in plan.md Complexity Tracking section
+- Unjustified complexity increases are grounds for rejection
+- Development guidance is maintained in agent-specific files (e.g., CLAUDE.md)
+
+### Technology Stack Constraints
+- **Language**: TypeScript (version specified in tsconfig.json)
+- **Framework**: Express.js for HTTP layer
+- **ORM**: TypeORM for database interactions
+- **Database**: PostgreSQL (development via Docker Compose)
+- **Testing**: Jest with ts-jest, @testcontainers/postgresql for integration tests
+- **Linting**: Configuration to be defined (TODO)
+
+**Version**: 1.0.0 | **Ratified**: 2025-10-06 | **Last Amended**: 2025-10-06
