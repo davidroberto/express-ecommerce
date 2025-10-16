@@ -1,8 +1,5 @@
 import { config } from 'dotenv';
 import {DataSource} from "typeorm";
-import {Product} from "../module/product/Product";
-import {Order} from "../module/order/Order";
-import {OrderItem} from "../module/order/OrderItem";
 config({ path: '.env.local' });
 
 const AppDataSource =  new DataSource({
@@ -13,7 +10,7 @@ const AppDataSource =  new DataSource({
     password: process.env.DB_PW,
     database: process.env.DB_NAME,
     logging: false,
-    entities: [Product, Order, OrderItem],
+    entities: [],
     synchronize: true,
     entitySkipConstructor: true,
 });
