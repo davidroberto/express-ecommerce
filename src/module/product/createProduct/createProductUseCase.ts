@@ -1,7 +1,13 @@
-import AppDataSource from "../../../config/db.config";
 import {Product} from "../productEntity";
+import {CreateProductRepository} from "./createProductRepository";
 
 export class CreateProductUseCase {
+
+    private productRepository: CreateProductRepository;
+
+    constructor(productRepository: CreateProductRepository) {
+        this.productRepository = productRepository;
+    }
 
     async execute({title, description, price}: {title: string, description: string, price: number}): Promise<void> {
 
@@ -17,15 +23,13 @@ export class CreateProductUseCase {
             throw new Error("le prix doit être inférieur à 10000");
         }
 
-        const productRepository = AppDataSource.getRepository<Product>(Product);
-
         const product = new Product();
         product.title = title;
         product.description = description;
         product.price = price;
 
         try {
-            await productRepository.save(product);
+            await this.productRepository.save(product);
         } catch (error) {
             console.error("Error saving product:", error);
         }

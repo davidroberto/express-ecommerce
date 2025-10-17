@@ -1,3 +1,5 @@
+import {CreateProductTypeOrmRepository} from "./createProductTypeOrmRepository";
+
 const express = require("express");
 const router = express.Router();
 import {Request, Response} from "express";
@@ -7,7 +9,8 @@ router.post('/product', async (request: Request, response: Response) => {
 
     const {title, description, price} = request.body;
 
-    const createProductUseCase = new CreateProductUseCase();
+    const createProductTypeOrmRepository = new CreateProductTypeOrmRepository();
+    const createProductUseCase = new CreateProductUseCase(createProductTypeOrmRepository);
 
     try {
         await createProductUseCase.execute({title, description, price});
