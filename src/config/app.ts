@@ -1,6 +1,7 @@
 import express, {Request, Response} from "express";
 const cors = require("cors");
-const productController = require("../module/product/createProduct/createProductController");
+const createProductController = require("../module/product/createProduct/createProductController");
+const updateProductController = require("../module/product/updateProduct/updateProductController");
 
 
 
@@ -13,7 +14,9 @@ export function buildApp() {
         res.send('OK');
     });
 
-    app.use("/api", productController);
+    app.use("/api", createProductController);
+    app.use("/api", updateProductController);
+
 
     return app;
 }

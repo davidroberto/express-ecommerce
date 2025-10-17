@@ -1,16 +1,17 @@
+import {UpdateProductUseCase} from "./updateProductUseCase";
 const express = require("express");
 const router = express.Router();
 import {Request, Response} from "express";
-import {CreateProductUseCase} from "./createProductUseCase";
 
-router.post('/product', async (request: Request, response: Response) => {
+router.post('/product/:id', async (request: Request, response: Response) => {
 
+    const id = parseInt(request.params.id);
     const {title, description, price} = request.body;
 
-    const createProductUseCase = new CreateProductUseCase();
+    const updateProductUseCase = new UpdateProductUseCase();
 
     try {
-        await createProductUseCase.execute({title, description, price});
+        await updateProductUseCase.execute(id, {title, description, price});
     } catch (error) {
         if (error instanceof Error) {
             return response.status(400).json({message: error.message});
