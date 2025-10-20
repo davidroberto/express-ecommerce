@@ -1,3 +1,5 @@
+import {Product} from "./Product";
+
 export interface ProductRepository {
-    save(product: {price: number; title: string; description: string}): Promise<void>;
+    save(product: Product): Promise<void>;
 }

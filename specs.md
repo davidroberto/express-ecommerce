@@ -2,7 +2,7 @@
 
 ### US-1: Créer un produit
 
-En tant qu’admin,  
+En tant qu’utilisateur,  
 Je veux pouvoir créer un produit,  
 Afin de le mettre en vente
 
@@ -35,7 +35,7 @@ Règles métier :
 ### US-2: Modifier un produit
 
 
-En tant qu’admin,  
+En tant qu’utilisateur
 Je veux pouvoir modifier un produit,  
 Afin de mettre à jour ses infos pour la vente
 
@@ -45,25 +45,42 @@ Règles métier :
 - Prix < 10 000
 
     - Exemple 1/ Scénario 1 :
-        - Étant donné je suis identifié en tant qu’admin
+        - Étant donné je suis identifié en tant qu’utilisateur
         - Et qu’un produit existe avec l’identifiant 2
         - Quand je modifie le produit avec l’identifiant 2, avec en titre "switch 3», description «nouvelle nouvelle console» et un prix à 5000e
         - Alors le produit doit être modifié
 
     - Exemple 2/ Scénario 2 :
-        - Étant donné je suis identifié en tant qu’admin
+        - Étant donné je suis identifié en tant qu’utilisateur
         - Et qu’un produit existe avec l’identifiant 2
         - Quand je modifie le produit avec l’identifiant 2 avec en titre "sw»
         - Alors une erreur doit être envoyée «titre trop courr»
 
     - Exemple 3/ Scénario 3 :
-        - Étant donné je suis identifié en tant qu’admin
+        - Étant donné je suis identifié en tant qu’utilisateur
         - Et qu’un produit existe avec l’identifiant 2
         - Quand je modifie le produit avec l’identifiant 2 avec en prix -10
         - Alors une erreur doit être envoyée "le prix doit être supérieur à 0»
 
     - Exemple 4/ Scénario 4 :
-        - Étant donné je suis identifié en tant qu’admin
+        - Étant donné je suis identifié en tant qu’utilisateur
         - Et qu’un produit existe avec l’identifiant 2
         - Quand je modifie le produit avec l’identifiant 2 avec en prix 11000
         - Alors une erreur doit être envoyée « le prix doit être inférieur à 11000 »
+
+
+## Order
+
+### US-3: Ajouter un produit à une commande
+
+En tant qu’utilisateur,  
+Je veux pouvoir ajouter un produit à une commande,  
+Afin de faire un achat
+
+Règles métier :
+- max 3 produits par commande
+- max 100e par commande
+- max 2 fois le même produit
+- si commande existante : ajoute le produit dans la commande
+- si commande pas existante : créé le commande
+- si produit déjà dans la commande : incrémente la quantité

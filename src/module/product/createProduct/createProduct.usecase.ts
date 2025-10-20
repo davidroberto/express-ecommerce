@@ -20,13 +20,19 @@ export class CreateProductUsecase {
 
         const product = new Product(title, description, price);
 
+        await this.persistProduct(product);
+
+
+    }
+
+
+    private async persistProduct(product: Product): Promise<void> {
+
         try {
-            // j'utilise le repository pour sauvegarder le produit
             await this.productRepository.save(product);
         } catch (error) {
             throw new Error('Error saving product');
         }
-
     }
 
 }
