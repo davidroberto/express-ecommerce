@@ -84,3 +84,22 @@ Règles métier :
 - si commande existante : ajoute le produit dans la commande
 - si commande pas existante : créé le commande
 - si produit déjà dans la commande : incrémente la quantité
+
+    - Exemple 1/ Scénario 1 : ajout d'un produit réussi sur une nouvelle commande
+        - Étant donné je suis identifié en tant qu’utilisateur
+        - Et qu'il n'y a pas de commande existante
+        - Quand j'ajoute un produit identifié à l'id 1, une quantité 1 et un prix à 100
+        - Alors une nouvelle commande doit être créée avec avec une ligne contenant le produit 1, la quantité à 1 et un prix à 100
+
+      - Exemple 2/ Scénario 2 : ajout d'un produit réussi sur une commande existante
+          - Étant donné je suis identifié en tant qu’utilisateur
+          - Et qu'il y a déjà une commmande existante avec une ligne contenant le produit 1 et une quantité à 1
+          - Quand j'ajoute le produit 1 avec une quantité à 1
+          - Alors la commande doit contenir une ligne avec le produit 1, la quantité à 2 et un prix total à 200
+
+
+    
+- Créer les exemples / scénarios pour la US 3 «créer une commande»
+- implémenter chaque scénario dans le code, en respectant la screaming archi, 
+- les vertical slices et le monolithe modulaire, avec un test unitaire par scénario
+
