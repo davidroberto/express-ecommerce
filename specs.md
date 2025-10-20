@@ -30,6 +30,10 @@ Règles métier :
         - Étant donné qu'il n'y a pas de produit enregistré
         - Quand je créé un produit avec en prix 11000
         - Alors une erreur doit être envoyée «le prix doit être inférieur à 11000»
+    - Exemple 5/ Scénario 5 : création échouée, échec de sauvegarde non prévue
+      - Étant donné qu'il n'y a pas de produit enregistré
+      - Quand je créé un produit, si la sauvegarde échoue
+      - Alors une erreur doit être envoyée «erreur lors de la création du produit»
 
 
 ### US-2: Modifier un produit

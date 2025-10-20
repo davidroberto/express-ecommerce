@@ -31,7 +31,7 @@ export class CreateProductUseCase {
         try {
             await this.productRepository.save(product);
         } catch (error) {
-            console.error("Error saving product:", error);
+            throw new Error("erreur lors de la création du produit");
         }
 
     }
