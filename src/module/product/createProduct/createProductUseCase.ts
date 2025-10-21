@@ -11,22 +11,7 @@ export class CreateProductUseCase {
 
     async execute({title, description, price}: {title: string, description: string, price: number}): Promise<void> {
 
-        if (title.length <= 2) {
-            throw new Error("titre trop court");
-        }
-
-        if (price < 0) {
-            throw new Error("le prix doit être supérieur à 0");
-        }
-
-        if (price > 10000) {
-            throw new Error("le prix doit être inférieur à 10000");
-        }
-
-        const product = new Product();
-        product.title = title;
-        product.description = description;
-        product.price = price;
+        const product = new Product(price, title, description);
 
         try {
             await this.productRepository.save(product);
