@@ -1,14 +1,17 @@
-import {UpdateProductUseCase} from "./updateProductUseCase";
+import {UpdateProductTypeOrmRepository} from "./updateProductTypeOrmRepository";
+
 const express = require("express");
 const router = express.Router();
 import {Request, Response} from "express";
+import {UpdateProductUsecase} from "./updateProductUseCase";
 
 router.post('/product/:id', async (request: Request, response: Response) => {
 
     const id = parseInt(request.params.id);
     const {title, description, price} = request.body;
 
-    const updateProductUseCase = new UpdateProductUseCase();
+    const updateProductTypeOrmRepository = new UpdateProductTypeOrmRepository()
+    const updateProductUseCase = new UpdateProductUsecase(updateProductTypeOrmRepository);
 
     try {
         await updateProductUseCase.execute(id, {title, description, price});
