@@ -1,5 +1,12 @@
 import {UpdateProductRepository} from "./updateProductRepository";
 
+type UpdateProductCommand = {
+    id: number;
+    title: string;
+    description: string;
+    price: number;
+};
+
 export class UpdateProductUsecase {
 
     private productRepository: UpdateProductRepository;
@@ -9,7 +16,9 @@ export class UpdateProductUsecase {
     }
 
 
-    async execute({title, description, price}: any,productId: number) {
+    async execute(command: UpdateProductCommand): Promise<void> {
+
+        const {id: productId, title, description, price} = command;
 
         const product = await this.productRepository.findOneById(productId);
 
@@ -17,11 +26,12 @@ export class UpdateProductUsecase {
             throw new Error("Product not found");
         }
 
+
         product.update(title, description, price);
 
 
         try {
-            await this.productRepository.save(product);
+            return await this.productRepository.save(product);
         } catch (error) {
             throw new Error('Error updating product');
         }

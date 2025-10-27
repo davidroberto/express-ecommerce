@@ -1,5 +1,5 @@
-import {Product} from "../productEntity";
 import {CreateProductRepository} from "./createProductRepository";
+import {Product} from "../Product";
 
 export class CreateProductUseCase {
 
@@ -11,7 +11,7 @@ export class CreateProductUseCase {
 
     async execute({title, description, price}: {title: string, description: string, price: number}): Promise<void> {
 
-        const product = new Product(price, title, description);
+        const product = new Product({title, description, price});
 
         try {
             await this.productRepository.save(product);
