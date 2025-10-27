@@ -31,9 +31,11 @@ describe("US-1 : Créer un produit - E2E", () => {
 
         await dataSource.initialize();
 
+        const AppDataSource = require("../../../config/db.config").default;
+
+
         app = buildApp();
 
-        const AppDataSource = require("../../../config/db.config").default;
         Object.assign(AppDataSource, dataSource);
     });
 

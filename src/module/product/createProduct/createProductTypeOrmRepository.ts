@@ -1,6 +1,6 @@
 import {CreateProductRepository} from "./createProductRepository";
 import AppDataSource from "../../../config/db.config";
-import {Product} from "../productEntity";
+import {Product} from "../Product";
 
 export class CreateProductTypeOrmRepository implements CreateProductRepository {
 

@@ -1,6 +1,6 @@
 import { config } from 'dotenv';
 import {DataSource} from "typeorm";
-import {Product} from "../module/product/productEntity";
+import {Product} from "../module/product/Product";
 config({ path: '.env.local' });
 
 const AppDataSource =  new DataSource({
