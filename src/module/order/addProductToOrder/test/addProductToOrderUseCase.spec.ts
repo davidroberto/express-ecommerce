@@ -69,4 +69,38 @@ describe("US-2 : Ajouter un produit à une commande", () => {
         expect(productItem!.quantity).toBe(3);
     });
 
+    test("Scénario US-2-3 : ajout échoué, dépassement du nombre maximum de produits", async () => {
+        // GIVEN: Étant donné qu'une commande existe avec l'identifiant 1 et qu'elle contient déjà 5 produits différents
+        class AddProductToOrderDummyRepositoryWithMaxProducts implements AddProductToOrderRepository {
+            async findById(orderId: number): Promise<Order | null> {
+                // Retourne une commande qui contient déjà 5 produits différents
+                const order = new Order({
+                    id: 1,
+                    items: [
+                        {productId: 1, quantity: 1},
+                        {productId: 2, quantity: 1},
+                        {productId: 3, quantity: 1},
+                        {productId: 4, quantity: 1},
+                        {productId: 5, quantity: 1}
+                    ],
+                    totalAmount: 0
+                });
+                return order;
+            }
+
+            async save(order: Order): Promise<void> {
+                // Ne fait rien, c'est un dummy
+            }
+        }
+
+        const repository = new AddProductToOrderDummyRepositoryWithMaxProducts();
+        const addProductToOrderUseCase = new AddProductToOrderUseCase(repository);
+
+        // WHEN: Quand j'ajoute un nouveau produit à la commande avec l'identifiant 1
+        // THEN: Alors une erreur doit être envoyée « nombre maximum de produits atteint »
+        await expect(
+            addProductToOrderUseCase.execute({orderId: 1, productId: 6, quantity: 1})
+        ).rejects.toThrow("nombre maximum de produits atteint");
+    });
+
 });

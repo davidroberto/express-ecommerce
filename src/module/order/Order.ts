@@ -32,6 +32,9 @@ export class Order {
         if (existingItem) {
             existingItem.quantity += quantity;
         } else {
+            if (this.items.length >= 5) {
+                throw new Error("nombre maximum de produits atteint");
+            }
             this.items.push({productId, quantity});
         }
     }
