@@ -29,6 +29,15 @@ Execute the following sequential workflow with mandatory user validation at each
 ## PHASE 3: TDD Execution and Validation
 13. **Upon user validation of Phase 2**: Execute the test to ensure it fails appropriately (Red phase of TDD)
 14. **Implement minimal production code**: Write the simplest possible implementation to make the test pass (Green phase of TDD)
+    - **CRITICAL TDD PRINCIPLE**: Implement ONLY what is required to make THIS specific test pass
+    - **NO defensive code**: Do not add validation, error handling, or edge case checks that are not explicitly tested in THIS scenario
+    - **NO anticipation**: Do not implement features for future scenarios, even if they seem obvious or necessary
+    - **Example violations to AVOID**:
+        - Adding `if (!entity)` checks when the test always provides a valid entity
+        - Adding parameter validation when the test doesn't verify validation errors
+        - Adding try-catch blocks when the test doesn't verify error handling
+        - Implementing business rules not tested in THIS specific scenario
+    - **Rule**: If removing a line of code still makes the test pass, that line should NOT be there
 15. **Verify test passage**: Confirm the test now passes with the minimal implementation
 16. **Present results to user**: Show both the test results and the minimal implementation code
 17. **Await user confirmation**: Wait for user validation that the test passes correctly
